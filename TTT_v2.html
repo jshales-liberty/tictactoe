@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head><title>Jonathan's Tic-Tac-Toe</title>
+<body> <h1>Jonathan's Tic-Tac-Toe</h1> 
+<h3>Please make your choice.  <input type="button" value="Restart Game" onClick="window.location.reload()"></h3>
+<div>
+<table border = 1; style="width:35%"; id="table">
+  <tr>
+    <td id = "c00">_</td>
+    <td id = "c01">_</td>
+    <td id = "c02">_</td>
+  </tr>
+  <tr>
+    <td id = "c10">_</td>
+    <td id = "c11">_</td>
+    <td id = "c12">_</td>
+  </tr>
+  <tr>
+    <td id = "c20">_</td>
+    <td id = "c21">_</td>
+    <td id = "c22">_ </td>
+  </tr>
+</table>
+  <div id="msg_div" class="">
+It's x's turn!
+    </div>
+    </div>
+</body>
+ <script type="text/javascript">
+ document.getElementById('c00').addEventListener('click', function() {turn_tracker = add_piece(0,0)});
+ document.getElementById('c01').addEventListener('click', function() {turn_tracker = add_piece(0,1)});
+ document.getElementById('c02').addEventListener('click', function() {turn_tracker = add_piece(0,2)});
+ document.getElementById('c10').addEventListener('click', function() {turn_tracker = add_piece(1,0)});
+ document.getElementById('c11').addEventListener('click', function() {turn_tracker = add_piece(1,1)});
+ document.getElementById('c12').addEventListener('click', function() {turn_tracker = add_piece(1,2)});
+ document.getElementById('c20').addEventListener('click', function() {turn_tracker = add_piece(2,0)});
+ document.getElementById('c21').addEventListener('click', function() {turn_tracker = add_piece(2,1)});
+ document.getElementById('c22').addEventListener('click', function() {turn_tracker = add_piece(2,2)});
+
+
+ var game_board = [['_','_','_'],['_','_','_'],['_','_','_']];
+
+ turn_tracker = 'x';
+ function add_piece(pos1, pos2)
+ {if (game_board[pos1][pos2] === '_') {game_board[pos1][pos2] = turn_tracker;
+ 	outcome = render_board() || evaluate_board();
+  if (outcome == true)
+  {console.log("game over"); return turn_tracker;}
+ 	else if (turn_tracker==='x')
+ 		{document.getElementById('msg_div').innerHTML = "It's o's turn!";
+  return 'o';}
+ 	else if (turn_tracker==='o')
+  {document.getElementById('msg_div').innerHTML = "It's x's turn!"; return 'x'} } else {return turn_tracker;}}
+ function evaluate_board(){
+ 	for (i=0; i<3; i++)
+ 	{if ((game_board[i][0] === game_board[i][1] && game_board[i][0]===game_board[i][2] && game_board[i][0] != '_') ||
+ (game_board[0][i] === game_board[1][i] && game_board[0][i]===game_board[2][i] && game_board[0][i] != '_')) {document.getElementById('msg_div').innerHTML = "Winner is " + turn_tracker + "!"; return true;}}
+ if (((game_board[0][0] === game_board[1][1] && game_board[0][0]===game_board[2][2]) || (game_board[0][2] === game_board[1][1] && game_board[2][0] ===game_board[1][1])) && (game_board[1][1] != '_')) 
+ 	{document.getElementById('msg_div').innerHTML = "Winner is " + turn_tracker + "!";
+ return true;
+ 		}
+ else {return false;}}
+function render_board(){
+  var open_space = false;
+	for (i=0; i<3; i++)
+		{for (j=0; j<3; j++)
+			{var new_id = "c" + i.toString() + j.toString();
+			document.getElementById(new_id).innerHTML=(game_board[i][j]);
+      if (game_board[i][j] == "_")
+        {open_space = true;}}}
+      if (open_space == false && evaluate_board() == false)
+        {document.getElementById('msg_div').innerHTML = "Tie game.";
+      return true;}}
+
+ console.log(evaluate_board(game_board));
+ 
+ </script>
+</body>
+
+</html>
